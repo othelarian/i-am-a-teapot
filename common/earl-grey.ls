@@ -13,7 +13,7 @@ export class EarlGrey
     if @dt is '' then @dt = \html; @name = \html
     else if @dt is \html and @name is '' then @name = \html
   # statics ##################
-  @compile = (arr) ->
+  @compile = (arr) !->
     hdl = (name) ->
       (...opts) -> EarlGrey.tag name, ...opts
     for elt in arr then EarlGrey[elt] = hdl elt
@@ -41,7 +41,7 @@ export class EarlGrey
     check-opt = (opt) ->
       switch typeof! opt
         | \Object
-          if opt instanceof EarlGrey then \tea else \attrs
+          if opt instanceof EarlGrey then \earl else \attrs
         | \Array  => \arr
         | \String => \tea
         | otherwise => throw new Error "Invalid arg: #{opt}"
@@ -52,26 +52,28 @@ export class EarlGrey
         attr-ok = yes
       else if tp is \arr and (idx is 0 or idx is 1)
         children = elt
-      else if tp is \tea then children.push elt
+      else if tp in <[earl tea]> then children.push elt
       else throw new Error "bad argument: arg #{idx + 2}"
     new EarlGrey \tag, name, attrs, children
   # attribues ################
   # methods ##################
-  clean: !-> @children = []
-  delete: (index) !->
+  clean: -> @children = []; @
+  delete: (index) ->
     unless index < @children.length
       new Error 'Index bigger than the children length!'
-    else @children.splice index, 1
-  doctype: (@dt) !->
-  inner: (...children) ->
+    else @children.splice index, 1; @
+  doctype: (@dt) -> @
+  bag: (...children) ->
     for child, idx in children then @push child
     @
-  insert: (index, tag) !->
+  insert: (index, tag) ->
     unless tag instanceof EarlGrey or typeof! tag is \String
       throw new Error "This is not a EarlGrey Object or a String!"
-    else @children.splice index, 0, tag
-  push: (tag) !->
-    if tag instanceof EarlGrey or typeof! tag is \String then @children.push tag
+    else @children.splice index, 0, tag; @
+  push: (tag) ->
+    if tag instanceof EarlGrey or typeof! tag is \String
+      @children.push tag
+      @
     else
       console.error tag
       throw new Error 'This is not a EarlGrey Object or a String!'

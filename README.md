@@ -29,13 +29,10 @@ Now that you know this, let's dive.
 
 ### The documentation
 
-The ??
+Building a quine app requires some specific elements. Here a list (with a link to the dedicated doc file) with the most notable ones:
 
-??
-
-??
-(earl-grey.md)
-(darjeeling.md)
+* [Darjeeling class](https://github.com/othelarian/i-am-a-teapot/blob/main/docs/darjeeling.md), gathering all the functions to work with a server and the NW app
+* [EarlGrey class](https://github.com/othelarian/i-am-a-teapot/blob/main/docs/earl-grey.md), handling all the html output
 
 ### The ``config.ls` file
 
@@ -90,4 +87,4 @@ Here the available tasks and what they do:
 
 * __serve__
 
-  ??
+  starting an express server, capable of handling quine app synchronisation.
