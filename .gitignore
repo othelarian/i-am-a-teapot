@@ -1,0 +1,9 @@
+dist
+node_modules
+nw
+
+config.coffee
+config.js
+config.ls
+
+package-lock.json

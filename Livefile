@@ -1,0 +1,134 @@
+# REQUIRES ########################
+
+require! {
+  bach, browserify, express, fs, sass
+  '@othelarian/livescript': ls
+  './config.default': {cfg}
+}
+
+# INIT ############################
+
+# if config.ls is missing, then moving to config.default.ls
+try
+  cstm = require './config' .cfg
+  cfg <<<< cstm
+catch
+  if e.code is \MODULE_NOT_FOUND
+    console.log 'You may specify a "config.ls" file to customize the config'
+    console.log 'See the documentation here:'
+    console.log 'https://github.com/othelarian/i-am-a-teapot'
+  else throw e
+
+# FUNCTIONS #######################
+
+create-dir = (dir, cb) !-->
+  er <- fs.mkdir dir
+  if er?
+    unless er.code is \EEXIST then cb er, void else cb void 1
+
+final-cb = (err, res) !->
+  console.log if err? then err else 'Compilation SUCCESSFUL'
+
+gen-html = (dir) ->
+  #
+  # TODO
+  #
+  require "./#dir/index" .generate cfg
+  #
+
+pouring-tea = (cb) !->
+  #
+  # TODO
+  #
+  cb void 3
+  #
+
+serve = !->
+  #
+  # TODO: include the dav and the put method
+  #
+  #
+  app = express!
+  app.use express.static \./dist
+  app.listen 5001
+
+# TASKS ###########################
+
+option \watch, \w, \Boolean, '(only for "compile" command)'
+
+
+
+calling = !->
+  reqres = require.resolve \./src/index.ls
+  if require.cache[reqres]? then delete require.cache[reqres]
+  require \./src/index.ls .fn!
+
+task 'lettry', 'test task', !->
+  require! chokidar
+  #
+  calling!
+  #
+  chokopts = awaitWriteFinish: yes
+  watcher = chokidar.watch ['./src/index.ls'], chokopts
+  watcher.on \change, (pth) !->
+    #
+    console.log pth
+    #
+    calling!
+    #
+  #
+
+task \clean, 'delete ./dist and ./nw directories', !->
+  opts = recursive: yes, force: yes
+  console.log 'Cleaning [ dist ] and [ nw ]...'
+  fs.rmSync \dist, opts
+  fs.rmSync \nw, opts
+  console.log 'Project CLEANED'
+
+task \compile, 'compile the crunchier app', (opts) !->
+  #
+  # TODO: check for watch option
+  #
+  args =
+    create-dir \dist
+    #
+    pouring-tea
+    #
+    # sass
+    #
+    # js
+    #
+  if opts.watch? then args.push serve
+  console.log 'Compiling the app...'
+  (bach.series args) final-cb
+
+task 'gen-nw', 'generate the nw app content', !->
+  #
+  # TODO
+  #
+  args =
+    create-dir \nw
+    #
+    # sass
+    #
+    # js
+    #
+    gen-html \src-nw
+  console.log 'Compiling the nw...'
+  (bach.series args) final-cb
+
+task 'github', 'generate the github page', !->
+  #
+  # TODO
+  #
+  console.log 'github task not ready yet'
+  #
+
+task 'run-nw', 'run the nw app', !->
+  #
+  # TODO: check if cfg contains a valid nw file
+  #
+  console.log 'opening the nw app...'
+  require \child_process .spawn cfg.nw-sdk, [\.]
+
+task \serve, 'launch a static server on ./dist', !-> serve!
