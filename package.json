@@ -6,12 +6,14 @@
   "scripts": {
     "clean": "live clean",
     "compile": "live compile",
+    "config": "live config",
     "dev": "live compile -w",
     "gen-nw": "live gen-nw",
     "github": "live github",
     "help": "live -h",
     "run-nw": "live run-nw",
-    "serve": "live serve"
+    "serve": "live serve",
+    "test": "live test & nyc mocha"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +24,8 @@
     "chokidar": "^3.6.0",
     "express": "^4.18.3",
     "lucide-static": "^0.358.0",
+    "mocha": "^10.3.0",
+    "nyc": "^15.1.0",
     "sass": "^1.71.1"
   }
 }

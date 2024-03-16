@@ -1,6 +1,8 @@
 dist
 node_modules
 nw
+test
+tmp
 
 config.coffee
 config.js

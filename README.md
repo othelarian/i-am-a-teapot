@@ -55,15 +55,23 @@ Note: you don't have to write the config in LiveScript, you can also write it on
 
 As noted above, this packge use the `live` command to launch all its related tasks. You can use `npm run [task]` to launch it, the `package.json` already contained everything you need. If you install `@othelarian/livescript` globally you can directly use the `live [task]` command. There's some differences between `npm run` and `live`, but don't worry, if they differ both syntax are indicated.
 
+Except for the test and the code coverage, you must run `npm test` for this one (the `live test` task only compile the test scripts, and doesn't run them).
+
 Here the available tasks and what they do:
 
 * __clean__
 
-  delete the `dist` and `nw` directories
+  delete the `dist`, `nw` and `test` directories
 
 * __compile__
 
   compile the quine app, generating the `index.html` into the `dist` (and creating the directory if it doesn't exist).
+
+  ?? (-i int | \[int])
+
+* __config__
+
+  ??
 
 * __dev__ (`npm run`) or __compile -w__ (`live`)
 
